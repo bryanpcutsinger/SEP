@@ -149,7 +149,7 @@ def make_band_chart(summary_df, prev_df, variable):
                         prev_y.append(prev_med)
             if prev_x:
                 ax.plot(prev_x, prev_y, color='red', linestyle='--',
-                        linewidth=1.5, zorder=4, label="Previous SEP")
+                        linewidth=1.5, zorder=4, label="Prior Median")
                 prev_lookup = dict(zip(prev_x, prev_y))
 
     # Median line + dots
