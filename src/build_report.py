@@ -94,7 +94,16 @@ def _build_summary_table(current_df, prev_df=None):
                         diff = val - prev_val
                         if abs(diff) >= 0.05:
                             arrow = "&uarr;" if diff > 0 else "&darr;"
-                            color = "#cc3333" if diff > 0 else "#228B22"
+                            # Color logic depends on variable:
+                            # GDP: higher = green, lower = red
+                            # Unemployment/inflation: higher = red, lower = green
+                            # Fed funds rate: always black (neutral)
+                            if var == "Federal funds rate":
+                                color = "#333333"
+                            elif var == "Change in real GDP":
+                                color = "#228B22" if diff > 0 else "#cc3333"
+                            else:
+                                color = "#cc3333" if diff > 0 else "#228B22"
                             cell += f' <span style="color:{color};font-size:0.8em">{arrow}</span>'
                 body += f"<td>{cell}</td>"
         body += "</tr>"
