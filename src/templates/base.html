@@ -5,97 +5,401 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <style>
+        * { box-sizing: border-box; }
+
         body {
             font-family: Georgia, 'Times New Roman', serif;
-            max-width: 800px;
+            max-width: 860px;
             margin: 0 auto;
             padding: 2rem 1rem;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #333;
             background: #fafafa;
         }
+
         header {
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid #1f4e79;
             padding-bottom: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
+
         h1 {
             margin: 0 0 0.25rem 0;
             font-size: 1.8rem;
+            color: #1f4e79;
         }
-        .date {
+
+        .subtitle {
             color: #666;
             font-size: 0.95rem;
+            margin: 0;
         }
-        .body-content {
-            margin-bottom: 2rem;
+
+        .date {
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
         }
-        .chart {
-            text-align: center;
+
+        /* Key Takeaways */
+        .takeaways {
+            background: #f0f4f8;
+            border-left: 4px solid #1f4e79;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .takeaways h2 {
+            font-size: 1.1rem;
+            margin: 0 0 0.75rem 0;
+            color: #1f4e79;
+        }
+
+        .takeaways ul {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        .takeaways li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* FOMC Context */
+        .fomc-context {
+            font-size: 0.92rem;
+            color: #555;
+            font-style: italic;
+            margin: 1rem 0 1.5rem 0;
+            padding: 0.75rem 1rem;
+            background: #faf8f0;
+            border-left: 3px solid #c9a945;
+        }
+
+        /* Sections */
+        section {
             margin: 2rem 0;
         }
+
+        section h2 {
+            font-size: 1.3rem;
+            color: #1f4e79;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-intro {
+            font-size: 0.92rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        /* Charts */
+        .chart {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
         .chart img {
             max-width: 100%;
             height: auto;
+            border: 1px solid #eee;
         }
+
         .chart-caption {
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 0.4rem;
         }
+
+        /* Chart grid: two charts side by side on desktop */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .chart-grid .chart img {
+            width: 100%;
+        }
+
+        /* Summary Table */
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1.5rem 0;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
+
         th, td {
-            border: 1px solid #ccc;
-            padding: 0.5rem;
+            border: 1px solid #ddd;
+            padding: 0.4rem 0.6rem;
             text-align: right;
         }
+
         th {
-            background: #f0f0f0;
+            background: #f0f4f8;
+            color: #1f4e79;
             text-align: center;
+            font-weight: 600;
         }
+
         td:first-child, th:first-child {
             text-align: left;
+            font-weight: 500;
         }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Variable group header rows in summary table */
+        .var-header td {
+            background: #e8eef5;
+            font-weight: 600;
+            color: #1f4e79;
+            border-top: 2px solid #1f4e79;
+        }
+
+        /* Glossary */
+        details {
+            margin: 2rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #1f4e79;
+            font-size: 1rem;
+        }
+
+        details dl {
+            margin: 0.75rem 0 0 0;
+        }
+
+        details dt {
+            font-weight: 600;
+            margin-top: 0.75rem;
+            color: #333;
+        }
+
+        details dd {
+            margin: 0.25rem 0 0 1rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
         footer {
-            border-top: 1px solid #ccc;
+            border-top: 1px solid #ddd;
             padding-top: 1rem;
             margin-top: 3rem;
-            font-size: 0.85rem;
-            color: #666;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        footer a {
+            color: #4a86c8;
+        }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem 0.75rem;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.75rem;
+            }
+
+            th, td {
+                padding: 0.3rem 0.4rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <h1>{{ title }}</h1>
-        <div class="date">{{ date }}</div>
+        <p class="subtitle">{{ subtitle }}</p>
+        <p class="date">{{ meeting_label }} &middot; Report generated {{ generated_date }}</p>
     </header>
 
-    <div class="body-content">
-        {{ body }}
+    <!-- Key Takeaways -->
+    {% if takeaways %}
+    <div class="takeaways">
+        <h2>Key Takeaways</h2>
+        <ul>
+        {% for bullet in takeaways %}
+            <li>{{ bullet }}</li>
+        {% endfor %}
+        </ul>
     </div>
+    {% endif %}
 
-    {% for chart in charts %}
-    <div class="chart">
-        <img src="data:image/png;base64,{{ chart.data }}" alt="{{ chart.caption }}">
-        <div class="chart-caption">{{ chart.caption }}</div>
+    <!-- FOMC Context -->
+    {% if fomc_context %}
+    <div class="fomc-context">
+        {{ fomc_context }}
     </div>
-    {% endfor %}
+    {% endif %}
 
-    {% for table in tables %}
-    <div class="table-container">
-        {{ table }}
-    </div>
-    {% endfor %}
+    <!-- Section 1: Summary Table -->
+    {% if summary_table %}
+    <section>
+        <h2>Summary Table</h2>
+        <p class="section-intro">
+            Complete projection data. All values in percent.
+            {% if has_prev %} Arrows indicate direction of change from the previous SEP.{% endif %}
+        </p>
+        <div class="table-container">
+            {{ summary_table }}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Section 2: Economic Outlook -->
+    {% if gdp_chart or unemp_chart %}
+    <section>
+        <h2>Economic Outlook</h2>
+        <p class="section-intro">
+            Bands show the range of participant projections. The darker band
+            marks the central tendency (excluding the three highest and three
+            lowest), and the dot marks the median.
+            {% if has_prev %} The dashed red line shows the previous SEP median for comparison.{% endif %}
+        </p>
+        <div class="chart-grid">
+            {% if gdp_chart %}
+            <div class="chart">
+                <img src="data:image/png;base64,{{ gdp_chart.data }}" alt="{{ gdp_chart.caption }}">
+                <p class="chart-caption">{{ gdp_chart.caption }}</p>
+            </div>
+            {% endif %}
+            {% if unemp_chart %}
+            <div class="chart">
+                <img src="data:image/png;base64,{{ unemp_chart.data }}" alt="{{ unemp_chart.caption }}">
+                <p class="chart-caption">{{ unemp_chart.caption }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Section 3: Inflation Outlook -->
+    {% if pce_chart or core_pce_chart %}
+    <section>
+        <h2>Inflation Outlook</h2>
+        <p class="section-intro">
+            The black dotted line on the PCE chart marks the Fed's 2% inflation target.
+            {% if has_prev %} The dashed red line shows the previous SEP median for comparison.{% endif %}
+        </p>
+        <div class="chart-grid">
+            {% if pce_chart %}
+            <div class="chart">
+                <img src="data:image/png;base64,{{ pce_chart.data }}" alt="{{ pce_chart.caption }}">
+                <p class="chart-caption">{{ pce_chart.caption }}</p>
+            </div>
+            {% endif %}
+            {% if core_pce_chart %}
+            <div class="chart">
+                <img src="data:image/png;base64,{{ core_pce_chart.data }}" alt="{{ core_pce_chart.caption }}">
+                <p class="chart-caption">{{ core_pce_chart.caption }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Section 4: Monetary Policy Outlook -->
+    {% if ffr_chart %}
+    <section>
+        <h2>Monetary Policy Outlook</h2>
+        <p class="section-intro">
+            The band chart complements the dot plot below, summarizing the
+            median, central tendency, and full range of rate projections.
+            {% if has_prev %} The dashed red line shows the previous SEP median for comparison.{% endif %}
+        </p>
+        <div class="chart">
+            <img src="data:image/png;base64,{{ ffr_chart.data }}" alt="{{ ffr_chart.caption }}">
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Section 5: Dot Plot -->
+    {% if dotplot_chart %}
+    <section>
+        <h2>The Dot Plot</h2>
+        <p class="section-intro">
+            The dot plot shows each FOMC participant's projection for the
+            appropriate level of the federal funds rate at the end of each
+            calendar year and in the longer run. Each dot represents one
+            participant.
+        </p>
+        <div class="chart">
+            <img src="data:image/png;base64,{{ dotplot_chart.data }}" alt="{{ dotplot_chart.caption }}">
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Glossary -->
+    <details>
+        <summary>How to Read This Report</summary>
+        <dl>
+            <dt>What is the SEP?</dt>
+            <dd>The Summary of Economic Projections is released four times a
+            year alongside FOMC meeting minutes. Each of the 19 FOMC
+            participants submits projections for key economic variables.</dd>
+
+            <dt>Median</dt>
+            <dd>The middle projection when all participants' forecasts are
+            ranked from lowest to highest.</dd>
+
+            <dt>Central Tendency</dt>
+            <dd>The range of projections after excluding the three highest
+            and three lowest — a measure of where most participants cluster.</dd>
+
+            <dt>Range</dt>
+            <dd>The full spread from the lowest to the highest projection
+            across all participants.</dd>
+
+            <dt>Dot Plot</dt>
+            <dd>A chart showing each participant's projection for the federal
+            funds rate. Each dot is one participant — more dots at a level
+            means more agreement.</dd>
+
+            <dt>PCE vs. CPI</dt>
+            <dd>The Fed targets PCE (Personal Consumption Expenditures)
+            inflation, not the more widely reported CPI. PCE tends to run
+            slightly below CPI.</dd>
+
+            <dt>Longer Run</dt>
+            <dd>Participants' estimates of where each variable will settle
+            in the long term, once temporary shocks have faded. Think of it
+            as the economy's equilibrium.</dd>
+        </dl>
+    </details>
 
     <footer>
-        <p>Source: Federal Reserve Board, Summary of Economic Projections</p>
-        <p>Generated from <a href="https://github.com/bryanpcutsinger/SEP">bryanpcutsinger/SEP</a></p>
+        <p>Source: Federal Reserve Board,
+            <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Summary of Economic Projections</a></p>
+        <p>Generated from
+            <a href="https://github.com/bryanpcutsinger/SEP">bryanpcutsinger/SEP</a></p>
     </footer>
 </body>
 </html>

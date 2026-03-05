@@ -15,66 +15,76 @@ SEP/
 ├── .gitignore
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml        # GitHub Actions: build and deploy to Pages
+│       └── deploy.yml        # GitHub Actions: fetch → process → build → deploy
 ├── data/
-│   ├── raw/                  # Original SEP data as downloaded
-│   └── processed/            # Cleaned/transformed data ready for analysis
+│   ├── raw/                  # Scraped SEP HTML and parsed CSVs
+│   └── processed/            # Chart-ready data
 ├── src/
-│   ├── build_report.py       # Renders HTML report from template + data
+│   ├── fetch_sep_data.py     # Scrapes SEP from federalreserve.gov
+│   ├── fetch_sep_fred.py     # FRED API fallback (medians only)
+│   ├── process_data.py       # Transforms raw data for charts/tables
+│   ├── generate_takeaways.py # Template-based key takeaway bullets
+│   ├── make_charts.py        # Generates all matplotlib charts
+│   ├── build_report.py       # Orchestrates pipeline, renders HTML
 │   └── templates/
 │       └── base.html         # Jinja2 HTML template
-├── output/                   # Intermediate output artifacts (charts, tables)
+├── tests/
+│   ├── fixtures/             # Cached SEP HTML for offline testing
+│   ├── test_parsers.py       # Parser unit tests
+│   └── test_takeaways.py     # Takeaway generation tests
 └── _site/                    # Built site (generated, gitignored)
 ```
 
 ## Data Sources
 
-**Primary source:** FRED (Federal Reserve Economic Data), Release #326 — Summary of Economic Projections.
+- **Primary: Federal Reserve website** — SEP data is scraped directly from the accessible HTML version of the projection materials at `federalreserve.gov/monetarypolicy/fomcprojtabl{YYYYMMDD}.htm`. The script auto-discovers the most recent SEP from the FOMC calendar page.
 
-| Variable | Current Series ID | Longer-Run Series ID |
-|---|---|---|
-| Real GDP Growth (median) | GDPC1MD | GDPC1MDLR |
-| Unemployment Rate (median) | UNRATEMD | UNRATEMDLR |
-| PCE Inflation (median) | PCECTPIMD | PCECTPIMDLR |
-| Core PCE Inflation (median) | JCXFEMD | — |
-| Federal Funds Rate (median) | FEDTARMD | FEDTARMDLR |
+  Data extracted:
+  | Source | Contents | Output |
+  |--------|----------|--------|
+  | Table 1 | Median, central tendency, range (current + previous SEP) | `data/raw/sep_table1.csv`, `sep_table1_prev.csv` |
+  | Figure 2 | Fed funds dot plot (participant counts by rate level) | `data/raw/sep_dotplot.csv` |
+  | Figures 3.A-3.E | Participant distribution histograms | `data/raw/sep_distributions.csv` |
+  | Metadata | Meeting date, SEP URL | `data/raw/sep_metadata.json` |
 
-**How data flows:**
-1. Run `python src/fetch_sep_data.py` locally after each SEP meeting (~4x/year)
-2. Downloads median projections from FRED → writes `data/raw/sep_median_projections.csv`
-3. Commit and push the updated CSV
-4. CI runs `process_data.py` → `build_report.py` → deploys to Pages
-
-**API key:** Required only for `fetch_sep_data.py`. Free at https://fred.stlouisfed.org/docs/api/api_key.html. Store in `.env` (gitignored) as `FRED_API_KEY=your_key`.
+- **Fallback: FRED API** — `src/fetch_sep_fred.py` fetches median-only projections via the `fredapi` package. Requires `FRED_API_KEY` env var. Used if the Fed changes their HTML format.
 
 ## Report Specifications
 
-- **Format:** Single-page HTML report with embedded charts (base64) and tables
+- **Format:** Single-page HTML report with 6 embedded charts (base64 PNGs) and a summary table
+- **Charts:** 1 dot plot + 5 band charts (median/central tendency/range for each variable)
+- **Key takeaways:** Auto-generated from data using template-based rules (no LLM dependency)
 - **Site URL:** https://bryanpcutsinger.github.io/SEP/
 - **Publishing method:** GitHub Actions builds and deploys on push to main
-- **Audience:** TODO
-- **Tone:** TODO
+- **Audience:** Media, political leaders, business leaders, educated non-economists
+- **Tone:** Light analytical commentary — interprets patterns, not just restates numbers
 
 ## Workflow / Task Sequence
 
-1. Download/fetch latest SEP data
-2. Clean and process data
-3. Generate visualizations (matplotlib/seaborn)
-4. Build HTML report (`python src/build_report.py`)
-5. Push to main → GitHub Actions deploys to Pages
-6. **Local preview:** `python src/build_report.py && open _site/index.html`
+1. `python src/fetch_sep_data.py` — scrape latest SEP from Fed website
+2. `python src/process_data.py` — transform raw data for charts
+3. `python src/build_report.py` — generate charts, takeaways, render HTML
+4. Push to main → GitHub Actions deploys to Pages
+5. **Local preview:** `python src/fetch_sep_data.py && python src/process_data.py && python src/build_report.py && open _site/index.html`
+6. **Offline dev (uses cached fixture):** `python src/fetch_sep_data.py --fixture tests/fixtures/fomcprojtabl20251210.htm && python src/process_data.py && python src/build_report.py && open _site/index.html`
+7. **Run tests:** `python -m unittest discover -s tests -v`
 
 ## Conventions
 
 - **Language:** Python
 - **Data manipulation:** pandas
-- **Visualization:** matplotlib, seaborn
-- **Econometrics (if needed):** statsmodels, linearmodels
+- **Visualization:** matplotlib
+- **HTML templating:** Jinja2
+- **Web scraping:** BeautifulSoup + requests (with polite delays and User-Agent)
 - **Code style:** Simple, readable, well-commented (explain what key steps do, not every line)
 - **File naming:** lowercase with underscores (e.g., `fetch_sep_data.py`)
 
 ## Current Status
 
-- GitHub Pages infrastructure set up
-- Placeholder report deployed at https://bryanpcutsinger.github.io/SEP/
-- Data collection and report content: TODO
+- Full pipeline operational: fetch → process → charts → takeaways → HTML report
+- 6 charts: dot plot + 5 band charts (GDP, unemployment, PCE, core PCE, fed funds)
+- Auto-generated takeaways with previous-SEP comparison
+- 27 unit tests passing
+- GitHub Pages deployment configured
+- Cleanup audit completed (dead code, stale files, HTML table fix)
+- FOMC inter-meeting context feature: deferred (TODO)

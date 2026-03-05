@@ -27,7 +27,7 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Data files (keep raw/processed dirs via .gitkeep but ignore large data)
+# Data files (ignore large data, whitelist SEP outputs)
 *.csv
 *.xlsx
 *.xls
@@ -39,6 +39,7 @@ Thumbs.db
 # Allow SEP data files in data/raw/ and data/processed/
 !data/raw/*.csv
 !data/processed/*.csv
+!data/raw/*.json
 
 # Output artifacts (regenerated from code)
 output/*.png

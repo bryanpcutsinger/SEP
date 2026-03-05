@@ -1,0 +1,190 @@
+variable,horizon,bin_low,bin_high,n_participants,sep_vintage
+Change in real GDP,2025,1.2,1.3,1,previous
+Change in real GDP,2025,1.4,1.5,8,previous
+Change in real GDP,2025,1.4,1.5,1,current
+Change in real GDP,2026,1.4,1.5,1,previous
+Change in real GDP,2025,1.6,1.7,8,previous
+Change in real GDP,2025,1.6,1.7,12,current
+Change in real GDP,2026,1.6,1.7,4,previous
+Change in real GDP,2027,1.6,1.7,2,previous
+Change in real GDP,2028,1.6,1.7,6,previous
+Change in real GDP,2028,1.6,1.7,1,current
+Change in real GDP,Longer Run,1.6,1.7,6,previous
+Change in real GDP,Longer Run,1.6,1.7,3,current
+Change in real GDP,2025,1.8,1.9,5,current
+Change in real GDP,2026,1.8,1.9,7,previous
+Change in real GDP,2027,1.8,1.9,11,previous
+Change in real GDP,2027,1.8,1.9,4,current
+Change in real GDP,2028,1.8,1.9,8,previous
+Change in real GDP,2028,1.8,1.9,10,current
+Change in real GDP,Longer Run,1.8,1.9,8,previous
+Change in real GDP,Longer Run,1.8,1.9,11,current
+Change in real GDP,2025,2.0,2.1,2,previous
+Change in real GDP,2025,2.0,2.1,1,current
+Change in real GDP,2026,2.0,2.1,4,previous
+Change in real GDP,2026,2.0,2.1,4,current
+Change in real GDP,2027,2.0,2.1,4,previous
+Change in real GDP,2027,2.0,2.1,9,current
+Change in real GDP,2028,2.0,2.1,3,previous
+Change in real GDP,2028,2.0,2.1,5,current
+Change in real GDP,Longer Run,2.0,2.1,3,previous
+Change in real GDP,Longer Run,2.0,2.1,3,current
+Change in real GDP,2026,2.2,2.3,1,previous
+Change in real GDP,2026,2.2,2.3,7,current
+Change in real GDP,2027,2.2,2.3,4,current
+Change in real GDP,2028,2.2,2.3,1,current
+Change in real GDP,2026,2.4,2.5,1,previous
+Change in real GDP,2026,2.4,2.5,7,current
+Change in real GDP,2027,2.4,2.5,1,previous
+Change in real GDP,2027,2.4,2.5,1,current
+Change in real GDP,2028,2.4,2.5,1,previous
+Change in real GDP,2028,2.4,2.5,1,current
+Change in real GDP,Longer Run,2.4,2.5,2,previous
+Change in real GDP,Longer Run,2.4,2.5,2,current
+Change in real GDP,2026,2.6,2.7,1,previous
+Change in real GDP,2026,2.6,2.7,1,current
+Change in real GDP,2027,2.6,2.7,1,previous
+Change in real GDP,2027,2.6,2.7,1,current
+Change in real GDP,2028,2.6,2.7,1,previous
+Change in real GDP,2028,2.6,2.7,1,current
+Unemployment rate,Longer Run,3.8,3.9,2,previous
+Unemployment rate,Longer Run,3.8,3.9,1,current
+Unemployment rate,2026,4.0,4.1,1,previous
+Unemployment rate,2027,4.0,4.1,2,previous
+Unemployment rate,2027,4.0,4.1,3,current
+Unemployment rate,2028,4.0,4.1,5,previous
+Unemployment rate,2028,4.0,4.1,7,current
+Unemployment rate,Longer Run,4.0,4.1,6,previous
+Unemployment rate,Longer Run,4.0,4.1,7,current
+Unemployment rate,2025,4.2,4.3,1,previous
+Unemployment rate,2026,4.2,4.3,2,previous
+Unemployment rate,2026,4.2,4.3,4,current
+Unemployment rate,2027,4.2,4.3,11,previous
+Unemployment rate,2027,4.2,4.3,15,current
+Unemployment rate,2028,4.2,4.3,12,previous
+Unemployment rate,2028,4.2,4.3,11,current
+Unemployment rate,Longer Run,4.2,4.3,9,previous
+Unemployment rate,Longer Run,4.2,4.3,9,current
+Unemployment rate,2025,4.4,4.5,15,previous
+Unemployment rate,2025,4.4,4.5,12,current
+Unemployment rate,2026,4.4,4.5,13,previous
+Unemployment rate,2026,4.4,4.5,14,current
+Unemployment rate,2027,4.4,4.5,6,previous
+Unemployment rate,2027,4.4,4.5,1,current
+Unemployment rate,2028,4.4,4.5,2,previous
+Unemployment rate,2028,4.4,4.5,1,current
+Unemployment rate,Longer Run,4.4,4.5,2,previous
+Unemployment rate,Longer Run,4.4,4.5,2,current
+Unemployment rate,2025,4.6,4.7,3,previous
+Unemployment rate,2025,4.6,4.7,7,current
+Unemployment rate,2026,4.6,4.7,3,previous
+Unemployment rate,2026,4.6,4.7,1,current
+PCE inflation,2027,1.9,2.0,8,previous
+PCE inflation,2027,1.9,2.0,7,current
+PCE inflation,2028,1.9,2.0,19,previous
+PCE inflation,2028,1.9,2.0,19,current
+PCE inflation,Longer Run,1.9,2.0,19,previous
+PCE inflation,Longer Run,1.9,2.0,19,current
+PCE inflation,2026,2.1,2.2,1,previous
+PCE inflation,2026,2.1,2.2,2,current
+PCE inflation,2027,2.1,2.2,10,previous
+PCE inflation,2027,2.1,2.2,10,current
+PCE inflation,2026,2.3,2.4,3,previous
+PCE inflation,2026,2.3,2.4,11,current
+PCE inflation,2027,2.3,2.4,1,previous
+PCE inflation,2027,2.3,2.4,2,current
+PCE inflation,2025,2.5,2.6,1,previous
+PCE inflation,2026,2.5,2.6,8,previous
+PCE inflation,2026,2.5,2.6,5,current
+PCE inflation,2025,2.7,2.8,2,previous
+PCE inflation,2025,2.7,2.8,4,current
+PCE inflation,2026,2.7,2.8,7,previous
+PCE inflation,2026,2.7,2.8,1,current
+PCE inflation,2025,2.9,3.0,13,previous
+PCE inflation,2025,2.9,3.0,15,current
+PCE inflation,2025,3.1,3.2,3,previous
+Core PCE inflation,2027,1.9,2.0,7,previous
+Core PCE inflation,2027,1.9,2.0,5,current
+Core PCE inflation,2028,1.9,2.0,18,previous
+Core PCE inflation,2028,1.9,2.0,19,current
+Core PCE inflation,2026,2.1,2.2,1,previous
+Core PCE inflation,2026,2.1,2.2,1,current
+Core PCE inflation,2027,2.1,2.2,10,previous
+Core PCE inflation,2027,2.1,2.2,12,current
+Core PCE inflation,2028,2.1,2.2,1,previous
+Core PCE inflation,2026,2.3,2.4,1,previous
+Core PCE inflation,2026,2.3,2.4,7,current
+Core PCE inflation,2027,2.3,2.4,2,previous
+Core PCE inflation,2027,2.3,2.4,1,current
+Core PCE inflation,2026,2.5,2.6,10,previous
+Core PCE inflation,2026,2.5,2.6,8,current
+Core PCE inflation,2027,2.5,2.6,1,current
+Core PCE inflation,2025,2.7,2.8,2,previous
+Core PCE inflation,2025,2.7,2.8,2,current
+Core PCE inflation,2026,2.7,2.8,6,previous
+Core PCE inflation,2026,2.7,2.8,3,current
+Core PCE inflation,2025,2.9,3.0,2,previous
+Core PCE inflation,2025,2.9,3.0,15,current
+Core PCE inflation,2026,2.9,3.0,1,previous
+Core PCE inflation,2025,3.1,3.2,13,previous
+Core PCE inflation,2025,3.1,3.2,2,current
+Core PCE inflation,2025,3.3,3.4,2,previous
+Federal funds rate,2026,2.13,2.37,1,current
+Federal funds rate,2027,2.38,2.62,1,previous
+Federal funds rate,2027,2.38,2.62,1,current
+Federal funds rate,2026,2.63,2.87,2,previous
+Federal funds rate,2026,2.63,2.87,1,current
+Federal funds rate,2027,2.63,2.87,2,previous
+Federal funds rate,2027,2.63,2.87,2,current
+Federal funds rate,2028,2.63,2.87,4,previous
+Federal funds rate,2028,2.63,2.87,4,current
+Federal funds rate,Longer Run,2.63,2.87,5,previous
+Federal funds rate,Longer Run,2.63,2.87,4,current
+Federal funds rate,2025,2.88,3.12,1,previous
+Federal funds rate,2026,2.88,3.12,3,previous
+Federal funds rate,2026,2.88,3.12,2,current
+Federal funds rate,2027,2.88,3.12,3,previous
+Federal funds rate,2027,2.88,3.12,3,current
+Federal funds rate,2028,2.88,3.12,4,previous
+Federal funds rate,2028,2.88,3.12,3,current
+Federal funds rate,Longer Run,2.88,3.12,5,previous
+Federal funds rate,Longer Run,2.88,3.12,6,current
+Federal funds rate,2026,3.13,3.37,4,previous
+Federal funds rate,2026,3.13,3.37,4,current
+Federal funds rate,2027,3.13,3.37,7,previous
+Federal funds rate,2027,3.13,3.37,6,current
+Federal funds rate,2028,3.13,3.37,5,previous
+Federal funds rate,2028,3.13,3.37,6,current
+Federal funds rate,Longer Run,3.13,3.37,3,previous
+Federal funds rate,Longer Run,3.13,3.37,3,current
+Federal funds rate,2025,3.38,3.62,1,current
+Federal funds rate,2026,3.38,3.62,2,previous
+Federal funds rate,2026,3.38,3.62,4,current
+Federal funds rate,2027,3.38,3.62,2,previous
+Federal funds rate,2027,3.38,3.62,3,current
+Federal funds rate,2028,3.38,3.62,2,previous
+Federal funds rate,2028,3.38,3.62,2,current
+Federal funds rate,Longer Run,3.38,3.62,3,previous
+Federal funds rate,Longer Run,3.38,3.62,3,current
+Federal funds rate,2025,3.63,3.87,9,previous
+Federal funds rate,2025,3.63,3.87,12,current
+Federal funds rate,2026,3.63,3.87,6,previous
+Federal funds rate,2026,3.63,3.87,4,current
+Federal funds rate,2027,3.63,3.87,2,previous
+Federal funds rate,2027,3.63,3.87,2,current
+Federal funds rate,2028,3.63,3.87,2,previous
+Federal funds rate,2028,3.63,3.87,2,current
+Federal funds rate,Longer Run,3.63,3.87,2,previous
+Federal funds rate,Longer Run,3.63,3.87,2,current
+Federal funds rate,2025,3.88,4.12,2,previous
+Federal funds rate,2025,3.88,4.12,6,current
+Federal funds rate,2026,3.88,4.12,2,previous
+Federal funds rate,2026,3.88,4.12,3,current
+Federal funds rate,2027,3.88,4.12,2,previous
+Federal funds rate,2027,3.88,4.12,2,current
+Federal funds rate,2028,3.88,4.12,2,previous
+Federal funds rate,2028,3.88,4.12,2,current
+Federal funds rate,Longer Run,3.88,4.12,1,previous
+Federal funds rate,Longer Run,3.88,4.12,1,current
+Federal funds rate,2025,4.13,4.37,6,previous
+Federal funds rate,2025,4.38,4.62,1,previous
