@@ -169,6 +169,8 @@ def build():
             metadata = json.load(f)
 
     meeting_date = metadata.get("meeting_date", "Unknown date")
+    sep_date = metadata.get("sep_date", "")
+    sep_url = f"https://www.federalreserve.gov/monetarypolicy/fomcprojtabl{sep_date}.htm" if sep_date else "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
 
     # Generate charts
     print("Generating charts...")
@@ -221,6 +223,7 @@ def build():
         ffr_chart=chart_map.get("ffr"),
         has_prev=prev_df is not None,
         summary_table=summary_table,
+        sep_url=sep_url,
     )
 
     # Write output

@@ -59,15 +59,24 @@ SEP/
 - **Audience:** Media, political leaders, business leaders, educated non-economists
 - **Tone:** Light analytical commentary — interprets patterns, not just restates numbers
 
-## Workflow / Task Sequence
+## Workflow
 
-1. `python src/fetch_sep_data.py` — scrape latest SEP from Fed website
-2. `python src/process_data.py` — transform raw data for charts
-3. `python src/build_report.py` — generate charts, takeaways, render HTML
-4. Push to main → GitHub Actions deploys to Pages
-5. **Local preview:** `python src/fetch_sep_data.py && python src/process_data.py && python src/build_report.py && open _site/index.html`
-6. **Offline dev (uses cached fixture):** `python src/fetch_sep_data.py --fixture tests/fixtures/fomcprojtabl20251210.htm && python src/process_data.py && python src/build_report.py && open _site/index.html`
-7. **Run tests:** `python -m unittest discover -s tests -v`
+**Local preview (offline, recommended for development):**
+```bash
+python src/fetch_sep_data.py --fixture tests/fixtures/fomcprojtabl20251210.htm && python src/process_data.py && python src/build_report.py && open _site/index.html
+```
+
+**Local preview (live fetch from Fed website):**
+```bash
+python src/fetch_sep_data.py && python src/process_data.py && python src/build_report.py && open _site/index.html
+```
+
+**Run tests:**
+```bash
+python -m unittest discover -s tests -v
+```
+
+**Deploy:** Push to `main` → GitHub Actions builds and deploys automatically.
 
 ## Conventions
 
@@ -79,12 +88,16 @@ SEP/
 - **Code style:** Simple, readable, well-commented (explain what key steps do, not every line)
 - **File naming:** lowercase with underscores (e.g., `fetch_sep_data.py`)
 
+## Rules
+
+- Never push to GitHub without explicit user approval
+- Never run fetch_sep_data.py without --fixture during development unless the user asks for a live fetch
+- Always run tests (`python -m unittest discover -s tests -v`) after modifying any src/ file
+- Do not add new Python dependencies without asking first
+- Keep all generated files (CSVs, charts, HTML) in their designated directories — never write outputs to src/
+
 ## Current Status
 
-- Full pipeline operational: fetch → process → charts → takeaways → HTML report
-- 6 charts: dot plot + 5 band charts (GDP, unemployment, PCE, core PCE, fed funds)
-- Auto-generated takeaways with previous-SEP comparison
+- Pipeline is operational: fetch → process → charts → takeaways → HTML report
 - 27 unit tests passing
-- GitHub Pages deployment configured
-- Cleanup audit completed (dead code, stale files, HTML table fix)
-- FOMC inter-meeting context feature: deferred (TODO)
+- Next planned feature: FOMC inter-meeting context (tracked in GitHub Issues)
