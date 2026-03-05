@@ -36,8 +36,9 @@ Thumbs.db
 *.h5
 *.hdf5
 
-# Allow SEP data files in data/raw/
+# Allow SEP data files in data/raw/ and data/processed/
 !data/raw/*.csv
+!data/processed/*.csv
 
 # Output artifacts (regenerated from code)
 output/*.png

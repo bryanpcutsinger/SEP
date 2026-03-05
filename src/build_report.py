@@ -13,12 +13,14 @@ import datetime
 import os
 import sys
 
+import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 
 # Paths (relative to repo root)
 TEMPLATE_DIR = os.path.join("src", "templates")
 TEMPLATE_FILE = "base.html"
 OUTPUT_DIR = "_site"
+DATA_PATH = os.path.join("data", "processed", "sep_current.csv")
 
 
 def build():
@@ -28,6 +30,24 @@ def build():
         print(f"Error: Template not found at {template_path}", file=sys.stderr)
         sys.exit(1)
 
+    # Load processed data if available
+    tables = []
+    if os.path.exists(DATA_PATH):
+        df = pd.read_csv(DATA_PATH, index_col="Variable")
+        table_html = df.to_html(
+            classes="sep-table",
+            float_format=lambda x: f"{x:.1f}",
+            na_rep="—",
+        )
+        tables.append(table_html)
+        body = (
+            "The table below shows the median projections from the most recent "
+            "FOMC Summary of Economic Projections (SEP). Values represent the "
+            "median forecast across all participants for each variable and horizon."
+        )
+    else:
+        body = "No data available. Run fetch_sep_data.py and process_data.py first."
+
     # Load and render template
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template(TEMPLATE_FILE)
@@ -35,9 +55,9 @@ def build():
     html = template.render(
         title="Summary of Economic Projections",
         date=datetime.date.today().isoformat(),
-        body="Placeholder report content. Data and charts will be added in a future update.",
+        body=body,
         charts=[],
-        tables=[],
+        tables=tables,
     )
 
     # Write output

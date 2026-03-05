@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
+      - run: python src/process_data.py
       - run: python src/build_report.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

@@ -29,8 +29,23 @@ SEP/
 
 ## Data Sources
 
-<!-- TODO: Identify and document SEP data sources -->
-<!-- Likely candidates: Federal Reserve website, FRED API, official FOMC projection materials -->
+**Primary source:** FRED (Federal Reserve Economic Data), Release #326 — Summary of Economic Projections.
+
+| Variable | Current Series ID | Longer-Run Series ID |
+|---|---|---|
+| Real GDP Growth (median) | GDPC1MD | GDPC1MDLR |
+| Unemployment Rate (median) | UNRATEMD | UNRATEMDLR |
+| PCE Inflation (median) | PCECTPIMD | PCECTPIMDLR |
+| Core PCE Inflation (median) | JCXFEMD | — |
+| Federal Funds Rate (median) | FEDTARMD | FEDTARMDLR |
+
+**How data flows:**
+1. Run `python src/fetch_sep_data.py` locally after each SEP meeting (~4x/year)
+2. Downloads median projections from FRED → writes `data/raw/sep_median_projections.csv`
+3. Commit and push the updated CSV
+4. CI runs `process_data.py` → `build_report.py` → deploys to Pages
+
+**API key:** Required only for `fetch_sep_data.py`. Free at https://fred.stlouisfed.org/docs/api/api_key.html. Store in `.env` (gitignored) as `FRED_API_KEY=your_key`.
 
 ## Report Specifications
 
