@@ -46,8 +46,8 @@ DISPLAY_NAMES = {
 }
 
 UNITS = {
-    "Change in real GDP": "Percent change, Q4/Q4",
-    "Unemployment rate": "Percent",
+    "Change in real GDP": "",
+    "Unemployment rate": "",
     "PCE inflation": "Percent change, Q4/Q4",
     "Core PCE inflation": "Percent change, Q4/Q4",
     "Federal funds rate": "",
@@ -159,10 +159,14 @@ def make_band_chart(summary_df, prev_df, variable):
                 zorder=5)
         ax.scatter(x[valid], medians[valid], color=MEDIAN_COLOR, s=60,
                    zorder=6, label="Median")
-        # Data labels — shift below dot when prior-SEP line is just above
+        # Data labels — shift below dot when prior-SEP line is just above,
+        # but always label above for the last year to avoid x-axis overlap
+        last_year_x = len(year_horizons) - 1 if year_horizons else -1
         for xi, mi in zip(x[valid], medians[valid]):
             offset_y = 10
-            if xi in prev_lookup:
+            if xi == last_year_x:
+                offset_y = 10  # always above for last year before Longer Run
+            elif xi in prev_lookup:
                 prev_val = prev_lookup[xi]
                 # If previous SEP is above (or equal) and within ~0.4pp, label below
                 if prev_val >= mi and (prev_val - mi) < 0.4:
@@ -196,7 +200,7 @@ def make_band_chart(summary_df, prev_df, variable):
     handles, labels = ax.get_legend_handles_labels()
     # Deduplicate
     by_label = dict(zip(labels, handles))
-    legend_loc = "lower right" if variable == "Federal funds rate" else "upper right"
+    legend_loc = "lower right" if variable == "Federal funds rate" else "lower left" if variable == "Unemployment rate" else "upper right"
     ax.legend(by_label.values(), by_label.keys(), loc=legend_loc,
               fontsize=8, framealpha=0.9)
 
