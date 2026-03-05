@@ -109,6 +109,7 @@ def fetch_html(url, session=None):
     s = session or _get_session()
     resp = s.get(url, timeout=30)
     resp.raise_for_status()
+    resp.encoding = "utf-8"  # Fed pages are UTF-8 but server omits charset header
     time.sleep(1)  # polite delay
     return resp.text
 
