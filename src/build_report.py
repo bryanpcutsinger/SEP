@@ -33,29 +33,12 @@ OUTPUT_DIR = "_site"
 PROC_DIR = os.path.join("data", "processed")
 RAW_DIR = os.path.join("data", "raw")
 
-DISPLAY_NAMES = {
-    "Change in real GDP": "Real GDP Growth",
-    "Unemployment rate": "Unemployment Rate",
-    "PCE inflation": "PCE Inflation",
-    "Core PCE inflation": "Core PCE Inflation",
-    "Federal funds rate": "Federal Funds Rate",
-}
-
-VARIABLE_ORDER = [
-    "Change in real GDP",
-    "Unemployment rate",
-    "PCE inflation",
-    "Core PCE inflation",
-    "Federal funds rate",
-]
+from config import DISPLAY_NAMES, HORIZON_ORDER, VARIABLE_ORDER
 
 
 def _build_summary_table(current_df, prev_df=None):
     """Build an HTML summary table with median, CT, and range columns."""
-    horizons = []
-    for h in ["2024", "2025", "2026", "2027", "2028", "2029", "Longer Run"]:
-        if h in current_df["horizon"].values:
-            horizons.append(h)
+    horizons = [h for h in HORIZON_ORDER if h in current_df["horizon"].values]
 
     has_prev = prev_df is not None and not prev_df.empty
 
@@ -186,22 +169,8 @@ def build():
     charts = make_all_charts(current_df, prev_df, dotplot_df)
     print(f"  Generated {len(charts)} charts")
 
-    # Map charts to template variables by caption
-    chart_map = {}
-    for c in charts:
-        cap = c["caption"]
-        if "Dot Plot" in cap:
-            chart_map["dotplot"] = c
-        elif "GDP" in cap:
-            chart_map["gdp"] = c
-        elif "Unemployment" in cap:
-            chart_map["unemp"] = c
-        elif "Core PCE" in cap:
-            chart_map["core_pce"] = c
-        elif "PCE" in cap:
-            chart_map["pce"] = c
-        elif "Federal Funds" in cap:
-            chart_map["ffr"] = c
+    # Map charts to template variables by chart_type key
+    chart_map = {c["chart_type"]: c for c in charts}
 
     # Generate takeaways
     print("Generating takeaways...")
@@ -221,7 +190,7 @@ def build():
         title="Summary of Economic Projections",
         subtitle="A visual guide to the Federal Reserve's latest economic forecasts",
         meeting_label=f"FOMC Meeting: {meeting_date}",
-        generated_date=datetime.date.today().strftime("%B %d, %Y"),
+        generated_date=datetime.date.today().strftime("%B %-d, %Y"),
         takeaways=takeaways,
         fomc_context=None,  # TODO: FOMC context feature (future enhancement)
         dotplot_chart=chart_map.get("dotplot"),

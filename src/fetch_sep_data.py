@@ -430,7 +430,9 @@ def fetch(fixture_path=None):
         print(f"Using local fixture: {fixture_path}")
         with open(fixture_path) as f:
             html = f.read()
-        sep_date = "20241218"  # Default for fixture
+        # Extract date from fixture filename (e.g., fomcprojtabl20251210.htm)
+        date_match = re.search(r"(\d{8})", os.path.basename(fixture_path))
+        sep_date = date_match.group(1) if date_match else "20241218"
         prev_date = None
     else:
         print("Finding most recent SEP...")

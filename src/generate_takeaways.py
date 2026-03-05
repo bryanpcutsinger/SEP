@@ -22,16 +22,16 @@ def _get_val(df, variable, horizon, col="median"):
 
 
 def _direction(curr, prev):
-    """Return directional word based on change."""
+    """Return directional word ('up', 'down', or 'unchanged') based on change."""
     if curr is None or prev is None:
-        return None, None
+        return None
     diff = curr - prev
     if abs(diff) < 0.05:
-        return "unchanged", 0
+        return "unchanged"
     elif diff > 0:
-        return "up", diff
+        return "up"
     else:
-        return "down", diff
+        return "down"
 
 
 def _fmt(val):
@@ -96,7 +96,7 @@ def generate_takeaways(current_df, prev_df=None, meeting_date=None):
                           f"{_fmt(ffr_curr)}% through {year}")
 
             if has_prev and ffr_prev is not None:
-                direction, _ = _direction(ffr_curr, ffr_prev)
+                direction = _direction(ffr_curr, ffr_prev)
                 if direction == "up":
                     bullet += f", a higher path than projected in the previous SEP ({_fmt(ffr_prev)}%)"
                 elif direction == "down":
@@ -129,7 +129,7 @@ def generate_takeaways(current_df, prev_df=None, meeting_date=None):
             bullet = f"PCE inflation is not expected to reach the 2% target within the projection window"
 
         if has_prev and pce_prev is not None:
-            direction, _ = _direction(pce_curr, pce_prev)
+            direction = _direction(pce_curr, pce_prev)
             if direction == "up":
                 bullet += (f" — the {year} projection shifted higher to "
                            f"{_fmt(pce_curr)}% from {_fmt(pce_prev)}%")
@@ -144,7 +144,7 @@ def generate_takeaways(current_df, prev_df=None, meeting_date=None):
     gdp_prev = _get_val(prev_df, "Change in real GDP", year) if has_prev else None
 
     if gdp_curr is not None:
-        direction, _ = _direction(gdp_curr, gdp_prev)
+        direction = _direction(gdp_curr, gdp_prev)
         if has_prev and direction in ("up", "down"):
             strength = "stronger" if direction == "up" else "weaker"
             bullet = (f"Real GDP growth for {year} revised {direction} to "
@@ -160,7 +160,7 @@ def generate_takeaways(current_df, prev_df=None, meeting_date=None):
     unemp_prev = _get_val(prev_df, "Unemployment rate", year) if has_prev else None
 
     if unemp_curr is not None:
-        direction, _ = _direction(unemp_curr, unemp_prev)
+        direction = _direction(unemp_curr, unemp_prev)
         if has_prev and direction in ("up", "down"):
             verb = "rise to" if direction == "up" else "fall to"
             bullet = (f"The unemployment rate is expected to {verb} "

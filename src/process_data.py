@@ -22,29 +22,10 @@ import sys
 
 import pandas as pd
 
+from config import DISPLAY_NAMES, HORIZON_ORDER, VARIABLE_ORDER
+
 RAW_DIR = os.path.join("data", "raw")
 PROC_DIR = os.path.join("data", "processed")
-
-# Display order for variables
-VARIABLE_ORDER = [
-    "Change in real GDP",
-    "Unemployment rate",
-    "PCE inflation",
-    "Core PCE inflation",
-    "Federal funds rate",
-]
-
-# Friendly display names
-DISPLAY_NAMES = {
-    "Change in real GDP": "Real GDP Growth",
-    "Unemployment rate": "Unemployment Rate",
-    "PCE inflation": "PCE Inflation",
-    "Core PCE inflation": "Core PCE Inflation",
-    "Federal funds rate": "Federal Funds Rate",
-}
-
-# Horizon sort order
-HORIZON_ORDER = ["2024", "2025", "2026", "2027", "2028", "2029", "Longer Run"]
 
 
 def _sort_horizons(df):
@@ -55,14 +36,6 @@ def _sort_horizons(df):
     df = df.sort_values("_sort").drop(columns="_sort")
     return df
 
-
-def _sort_variables(df):
-    """Sort DataFrame rows by variable display order."""
-    order_map = {v: i for i, v in enumerate(VARIABLE_ORDER)}
-    df = df.copy()
-    df["_sort"] = df["variable"].map(order_map).fillna(99)
-    df = df.sort_values(["_sort", "horizon"]).drop(columns="_sort")
-    return df
 
 
 def process():
@@ -80,14 +53,14 @@ def process():
     # Process Table 1 — current SEP
     current = pd.read_csv(os.path.join(RAW_DIR, "sep_table1.csv"))
     current["display_name"] = current["variable"].map(DISPLAY_NAMES)
-    current = _sort_variables(current)
-    current = current.groupby("variable", sort=False).apply(
-        _sort_horizons, include_groups=False
-    ).reset_index(drop=True)
-    # Re-add variable column if lost
-    if "variable" not in current.columns:
-        current = pd.read_csv(os.path.join(RAW_DIR, "sep_table1.csv"))
-        current["display_name"] = current["variable"].map(DISPLAY_NAMES)
+    # Sort by variable order, then by horizon within each variable
+    var_order_map = {v: i for i, v in enumerate(VARIABLE_ORDER)}
+    horizon_order_map = {h: i for i, h in enumerate(HORIZON_ORDER)}
+    current["_var_sort"] = current["variable"].map(var_order_map).fillna(99)
+    current["_hz_sort"] = current["horizon"].map(horizon_order_map).fillna(99)
+    current = current.sort_values(["_var_sort", "_hz_sort"]).drop(
+        columns=["_var_sort", "_hz_sort"]
+    )
     current.to_csv(os.path.join(PROC_DIR, "sep_summary.csv"), index=False)
     print(f"Saved {len(current)} rows to {PROC_DIR}/sep_summary.csv")
 

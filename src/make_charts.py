@@ -35,22 +35,11 @@ BAND_FIGSIZE = (8, 4)
 DOT_FIGSIZE = (8, 6)
 DPI = 150
 
-HORIZON_ORDER = ["2024", "2025", "2026", "2027", "2028", "2029", "Longer Run"]
-
-DISPLAY_NAMES = {
-    "Change in real GDP": "Real GDP Growth Projections",
-    "Unemployment rate": "Unemployment Rate Projections",
-    "PCE inflation": "PCE Inflation Projections",
-    "Core PCE inflation": "Core PCE Inflation Projections",
-    "Federal funds rate": "Federal Funds Rate Projections",
-}
+from config import CHART_TITLES, HORIZON_ORDER, VARIABLE_ORDER
 
 UNITS = {
-    "Change in real GDP": "",
-    "Unemployment rate": "",
     "PCE inflation": "Percent change, Q4/Q4",
     "Core PCE inflation": "Percent change, Q4/Q4",
-    "Federal funds rate": "",
 }
 
 
@@ -190,7 +179,7 @@ def make_band_chart(summary_df, prev_df, variable):
     ax.set_xticks(x)
     ax.set_xticklabels(x_labels, fontsize=9)
     ax.set_ylabel("Percent", fontsize=10)
-    ax.set_title(DISPLAY_NAMES.get(variable, variable), fontsize=13,
+    ax.set_title(CHART_TITLES.get(variable, variable), fontsize=13,
                  fontweight="bold", pad=12)
     ax.grid(axis="y", color=GRID_COLOR, linewidth=0.5)
     ax.spines["top"].set_visible(False)
@@ -209,8 +198,20 @@ def make_band_chart(summary_df, prev_df, variable):
         ax.text(0.5, 1.02, subtitle, transform=ax.transAxes, ha="center",
                 fontsize=8, color="#666666")
 
-    caption = DISPLAY_NAMES.get(variable, variable)
-    return {"data": _to_base64(fig), "caption": caption}
+    # Map variable to a stable chart_type key for template mapping
+    chart_type_map = {
+        "Change in real GDP": "gdp",
+        "Unemployment rate": "unemp",
+        "PCE inflation": "pce",
+        "Core PCE inflation": "core_pce",
+        "Federal funds rate": "ffr",
+    }
+    caption = CHART_TITLES.get(variable, variable)
+    return {
+        "data": _to_base64(fig),
+        "caption": caption,
+        "chart_type": chart_type_map.get(variable, variable),
+    }
 
 
 def make_dotplot(dotplot_df):
@@ -295,7 +296,11 @@ def make_dotplot(dotplot_df):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    return {"data": _to_base64(fig), "caption": "Federal Funds Rate — Dot Plot"}
+    return {
+        "data": _to_base64(fig),
+        "caption": "Federal Funds Rate — Dot Plot",
+        "chart_type": "dotplot",
+    }
 
 
 def make_all_charts(summary_df, prev_df=None, dotplot_df=None):
@@ -315,15 +320,7 @@ def make_all_charts(summary_df, prev_df=None, dotplot_df=None):
             charts.append(dp_chart)
 
     # Charts 2-6: Band charts for each variable
-    variables = [
-        "Change in real GDP",
-        "Unemployment rate",
-        "PCE inflation",
-        "Core PCE inflation",
-        "Federal funds rate",
-    ]
-
-    for var in variables:
+    for var in VARIABLE_ORDER:
         chart = make_band_chart(summary_df, prev_df, var)
         if chart:
             charts.append(chart)
